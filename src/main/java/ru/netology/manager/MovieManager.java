@@ -1,55 +1,48 @@
 package ru.netology.manager;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.netology.domain.Movie;
+import ru.netology.domain.MovieCatalog;
 
-@Data
+import static java.lang.System.arraycopy;
 
 public class MovieManager {
-    private Movie[] movies = new Movie[0];
-    private int defaultMovieLength = 10;
 
+    private int countFilms = 10;
+    private MovieCatalog[] items = new MovieCatalog[countFilms];     // создание пустого массива
 
-
-
-    MovieManager() {
-
+    public MovieManager(int countFilms) {
+        this.countFilms = countFilms;
     }
 
-    public MovieManager(int customMovieLength) {
-        if (customMovieLength > 0) {
-            defaultMovieLength = customMovieLength;
-        }
-
+    public MovieManager() {
+        this.countFilms = 10;
     }
 
-    public void addMovie(Movie movie) {
-        int length = movies.length + 1;
-        Movie[] tmp = new Movie[length];
-        for (int i = 0; i < movies.length; i++) {
-            tmp[i] = movies[i];
-        }
-        int lastMovie = tmp.length - 1;
-        tmp[lastMovie] = movie;
-        movies = tmp;
-
+    public void addMovie(MovieCatalog item) {
+        int length = items.length + 1;
+        MovieCatalog[] tmp = new MovieCatalog[length];
+        arraycopy(items, 0, tmp, 0, items.length);
+        int lastIndex = tmp.length - 1;
+        tmp[lastIndex] = item;
+        items = tmp;
     }
 
-    public Movie[] getLastAdd() {
-        int moviesLength = movies.length;
-        if (moviesLength < defaultMovieLength) {
-            defaultMovieLength = moviesLength;
-        }
-        Movie[] customFilm = new Movie[defaultMovieLength];
-        for (int i = 0; i < customFilm.length; i++) {
-            int result = moviesLength - i - 1;
-            customFilm[i] = movies[result];
+    public MovieCatalog[] getItems() {
 
+        MovieCatalog[] draftResult = new MovieCatalog[countFilms];
+        int counter = 0;
+        // перебираем результаты
+        for (int i = 0; i < countFilms; i++) {
+            int index = items.length - i - 1;
+            if (items[index] != null) {
+                // выборка ненулевых значений
+                draftResult[counter] = items[index];
+                counter += 1;
+            }
         }
-        return customFilm;
+        // создание массива с нужной длиной
+        MovieCatalog[] result = new MovieCatalog[counter];
+        arraycopy(draftResult, 0, result, 0, counter);
+
+        return result;
     }
-
-
 }

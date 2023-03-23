@@ -2,91 +2,85 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.domain.Movie;
+import ru.netology.domain.MovieCatalog;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MovieManagerTest {
 
-    MovieManager manager = new MovieManager();
+    MovieManager manager = new MovieManager(7);
 
-    private Movie first = new Movie(1, "Bladshot", "http://", "actionMovie");
-    private Movie second = new Movie(2, "Ahead", "http://", "cartoon");
-    private Movie third = new Movie(3, "HotelBelgrad", "http://", "comedy");
-    private Movie fourth = new Movie(4, "Gentlemen", "http://", "actionMovie");
-    private Movie fifth = new Movie(5, "InvisibleMan", "http://", "horrors");
-    private Movie sixth = new Movie(6, "Trolls", "http://", "cartoon");
-    private Movie seventh = new Movie(7, "NumberOne", "http://", "comedy");
-    private Movie eighth = new Movie(8, "NumberTwo", "http://", "actionMovie");
-    private Movie ninth = new Movie(9, "NumberThree", "http://", "actionMovie");
-    private Movie tenth = new Movie(10, "NumberFour", "http://", "actionMovie");
+    private final MovieCatalog first = new MovieCatalog(
+            1, 1, "Movie1", "action");
+    private final MovieCatalog second = new MovieCatalog(
+            2, 2, "Movie2", "action");
+    private final MovieCatalog third = new MovieCatalog(
+            3, 3, "Movie3", "action");
+    private final MovieCatalog four = new MovieCatalog(
+            4, 4, "Movie4", "action");
+    private final MovieCatalog five = new MovieCatalog(
+            5, 5, "Movie5", "action");
+    private final MovieCatalog six = new MovieCatalog(
+            6, 6, "Movie6", "action");
+    private final MovieCatalog seven = new MovieCatalog(
+            7, 7, "Movie7", "action");
+    private final MovieCatalog eight = new MovieCatalog(
+            8, 8, "Movie8", "action");
+    private final MovieCatalog nine = new MovieCatalog(
+            9, 9, "Movie9", "action");
+    private final MovieCatalog ten = new MovieCatalog(
+            10, 10, "Movie10", "action");
+    private final MovieCatalog eleven = new MovieCatalog(
+            11, 11, "Movie11", "action");
+    private final MovieCatalog twelve = new MovieCatalog(
+            12, 12, "Movie12", "action");
 
-    Movie[] expected = {tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
-
-
-    @Test
-    void mustShowTenMovie() {
-        MovieManager manager = new MovieManager(10);
+    @BeforeEach
+    void prepareManager() {
         manager.addMovie(first);
         manager.addMovie(second);
         manager.addMovie(third);
-        manager.addMovie(fourth);
-        manager.addMovie(fifth);
-        manager.addMovie(sixth);
-        manager.addMovie(seventh);
-        manager.addMovie(eighth);
-        manager.addMovie(ninth);
-        manager.addMovie(tenth);
-        Movie[] actual = manager.getLastAdd();
-        assertArrayEquals(expected, actual);
+        manager.addMovie(four);
+        manager.addMovie(five);
+        manager.addMovie(six);
+        manager.addMovie(seven);
+        manager.addMovie(eight);
+        manager.addMovie(nine);
+        manager.addMovie(ten);
+        manager.addMovie(eleven);
+        manager.addMovie(twelve);
     }
 
     @Test
-    void mustShowNothing() {
-        MovieManager manager = new MovieManager(0);
-        Movie[] actual = manager.getLastAdd();
-        Movie [] expected = new Movie[0];
-        assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    void mustShowValid() {
-        MovieManager manager = new MovieManager(5);
+    public void shouldSave() {
         manager.addMovie(first);
-        manager.addMovie(second);
-        manager.addMovie(third);
-        manager.addMovie(fourth);
-        manager.addMovie(fifth);
-        manager.addMovie(sixth);
-        manager.addMovie(seventh);
-        manager.addMovie(eighth);
-        manager.addMovie(ninth);
-        manager.addMovie(tenth);
-        Movie movieToAdd = new Movie(11, "NumberFive", "http://", "horrors");
-        manager.addMovie(movieToAdd);
-        Movie[] actual = manager.getLastAdd();
-        Movie[] expected = {new Movie(11, "NumberFive", "http://", "horrors"), tenth, ninth, eighth, seventh};
-        assertArrayEquals(expected, actual);
+        MovieCatalog[] expected = new MovieCatalog[]{
+                first,
+                twelve,
+                eleven,
+                ten,
+                nine,
+                eight,
+                seven
+        };
+        MovieCatalog[] actual = manager.getItems();
 
+        assertArrayEquals(expected, actual);
     }
 
     @Test
-    void mustShowOverMax() {
-        MovieManager manager = new MovieManager(11);
-        manager.addMovie(first);
-        manager.addMovie(second);
-        manager.addMovie(third);
-        manager.addMovie(fourth);
-        manager.addMovie(fifth);
-        manager.addMovie(sixth);
-        manager.addMovie(seventh);
-        manager.addMovie(eighth);
-        manager.addMovie(ninth);
-        manager.addMovie(tenth);
-        Movie[] actual = manager.getLastAdd();
+    public void shouldGetAll() {
+        MovieCatalog[] actual = manager.getItems();
+        MovieCatalog[] expected = {
+                twelve,
+                eleven,
+                ten,
+                nine,
+                eight,
+                seven,
+                six
+        };
         assertArrayEquals(expected, actual);
-
     }
-
 
 }

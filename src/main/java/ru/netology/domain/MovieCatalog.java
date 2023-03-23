@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 
-public class Movie {
+public class MovieCatalog {
     private int id;
-    private String name;
-    private String imageUrl;
-    private String genre;
+    private int movieId;
+    private String movieName;
+    private String moviesGenre;
+
 }
